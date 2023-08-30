@@ -57,7 +57,7 @@ class ClientThread(threading.Thread):
         res=""
         if not dataBase.user_exists(name):  # user not exist
             dataBase.add_user(name)
-        name,help_got,help_given=dataBase.get_all_data_by_name(name)
+        _,help_got,help_given=dataBase.get_all_data_by_name(name)
         print(name,help_got,help_given)
         res+=f"{consts.LOGIN}#{name}#{help_got}#{help_given}#"
         res+=self.uplode_at_login_handle()
@@ -83,10 +83,10 @@ class ClientThread(threading.Thread):
         print(msg_split,code)
         if code==consts.SEND:
 
-            res=self.sent_handle(msg[1:])
+            res=self.sent_handle(msg_split[1:])
         elif code==str(consts.LOGIN):
-            print("login")
-            res=self.login_handle(msg[-1])
+            print("login",msg)
+            res=self.login_handle(msg_split[-1])
 
         return True,res
 
