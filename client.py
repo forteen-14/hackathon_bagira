@@ -4,7 +4,7 @@ import consts
 
 def start_connection():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect((consts.HOST, consts.PORT))
+    client.connect((consts.IP, consts.PORT))
     return client
 
 
