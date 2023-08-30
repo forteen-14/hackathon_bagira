@@ -97,7 +97,7 @@ def chat_window_widget(root, client, name="No name"):
     e.grid(row=3, column=2)
 
     tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
-              command=lambda: send(e, txt, name, client)).place(x=810, y=595)
+              command=lambda: send(e, txt, name, client, consts.GENERAL)).place(x=810, y=595)
 
     # User rating
     help_give_rating = 0
