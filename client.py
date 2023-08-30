@@ -30,10 +30,10 @@ def login(client):
 def get_user_info(client):
     data = client.recv(1024)
     sever_msg = data.decode()
-    user_info = data.split("#")
-    user.name = user_info[0]
-    user.help_given = user_info[1]
-    user.help_got = user_info[2]
+    user_info = sever_msg.split("#")
+    user.name = user_info[1]
+    user.help_given = user_info[2]
+    user.help_got = user_info[3]
 
 
 def upload_msg_at_login(client):
