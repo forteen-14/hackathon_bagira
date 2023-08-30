@@ -74,6 +74,7 @@ class ClientThread(threading.Thread):
         for catgory,chat in self.msgs.items():
             res += f"{catgory}:["
             for msg in chat:
+                print("ttt ",msg,f"{msg[0]}:{msg[1]}:")
                 res+=f"{msg[0]}:{msg[1]}:"
             res+="]"
             res+="#"
