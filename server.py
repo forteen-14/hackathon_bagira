@@ -43,7 +43,7 @@ class ClientThread(threading.Thread):
         username,category,description=data
         msg={username:description}
         self.msgs[category].append(msg)
-        self.chat_logs[consts.CATEGORIES.index(category)]
+        #self.chat_logs[consts.CATEGORIES.index(category)]
         self.keep_last_msg[category]=[username,description]
 
 
@@ -106,28 +106,27 @@ class ClientThread(threading.Thread):
 
 
 
-def main():
 
-    msgs = {}
-    keep_last_msg = {}
-    chat_logs=[open(f"logs/{i}.txt", "a") for i in consts.CATEGORIES]
-    for i in consts.CATEGORIES:
-        msgs[i]=[]
-        keep_last_msg[i]=[]
-    LOCALHOST = consts.IP
-    PORT = consts.PORT
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server.bind((LOCALHOST, PORT))
-    print("Server started")
-    print("Waiting for client request..")
-    while True:
-        server.listen(1)
-        clientsock, clientAddress = server.accept()
-        newthread = ClientThread(clientAddress, clientsock, msgs,chat_logs)
-        newthread.start()
-if __name__ == "__main__":
-    main()
+
+msgs = {}
+keep_last_msg = {}
+chat_logs=[open(f"logs/{i}.txt", "a") for i in consts.CATEGORIES]
+for i in consts.CATEGORIES:
+    msgs[i]=[]
+    keep_last_msg[i]=[]
+LOCALHOST = consts.IP
+PORT = consts.PORT
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server.bind((LOCALHOST, PORT))
+print("Server started")
+print("Waiting for client request..")
+while True:
+    server.listen(1)
+    clientsock, clientAddress = server.accept()
+    newthread = ClientThread(clientAddress, clientsock, msgs ,keep_last_msg, chat_logs)
+    newthread.start()
+
 
 
 
