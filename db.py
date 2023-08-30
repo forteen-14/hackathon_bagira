@@ -1,33 +1,28 @@
 import sqlite3
 
-
-def create_table():
-    db = sqlite3.connect('db.db')
-    db.execute('''CREATE TABLE IF NOT EXISTS user (name TEXT, help_given INT, help_got INT);''')
-    db.commit()
-    return db
-
-
-def add_user(name, db):
-    db.execute('''INSERT INTO user (name, help_given, help_got) VALUES (?, ?, ?);''', (name, 0, 0))
-    db.commit()
+class DataBase:
+    def __init__(self):
+        self.db = self.create_table()
+    def create_table(self):
+        db = sqlite3.connect('db.db')
+        db.execute('''CREATE TABLE IF NOT EXISTS user (name TEXT, help_given INT, help_got INT);''')
+        db.commit()
+        return db
 
 
-def get_help_got_and_given(name, db):
-    cursor = db.execute('''SELECT help_given, help_got FROM user WHERE name=?;''', (name,))
-    return cursor.fetchone()
+    def add_user(self,name):
+        self.db.execute('''INSERT INTO user (name, help_given, help_got) VALUES (?, ?, ?);''', (name, 0, 0))
+        self.db.commit()
 
 
-def user_exists(name, db):
-    cursor = db.execute('''SELECT * FROM user WHERE name=?;''', (name,))
-    return len(cursor.fetchall()) > 0
+    def user_exists(self,name):
+        cursor = self.db.execute('''SELECT * FROM user WHERE name=?;''', (name,))
+        return len(cursor.fetchall()) > 0
+
+    def close(self):
+        self.db.close()
 
 
-def main():
-    db = create_table()
-    add_user('test', db)
-    db.close()
 
 
-if __name__ == '__main__':
-    main()
+

@@ -1,12 +1,10 @@
 import socket
 import consts
-import user
 
 
 def start_connection():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((consts.IP, consts.PORT))
-    client.sendall(bytes("This is from Client", 'UTF-8'))
     return client
 
 
