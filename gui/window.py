@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import font
 import consts
 
+
 window = tk.Tk()
-window.title("Chat Hackathon")
+window.title("Chat Hackton")
 window.geometry("1000x750")
 window.resizable(False, False)
 window.config(bg='#4fe3a5')
@@ -12,11 +13,17 @@ font1 = font.Font(family='Georgia', size=22, weight='bold')  # Font
 
 
 def chat_window_widget(root, name):
+<<<<<<< HEAD
     root.title("Chat Hackathon")
     root.resizable(False, False)
     # img = tk.PhotoImage(file=r'../../../PycharmProjects/gui/images/send_btn.png')
     # img = img.subsample(2, 2)
     # tk.Frame(root, bg='cyan', width=10, height=120, pady=3).place(x=0, y=0)
+=======
+    # img = tk.PhotoImage(file='../../../PycharmProjects/gui/images/send_btn.png')
+    tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=name, font=consts.FONT_BOLD, pady=10, width=20, height=1).grid(
+        row=0)
+>>>>>>> 97de66b3a7ec1ea621fe8bb4addb3dc57730d590
 
     txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=60)
     txt.grid(row=1, column=0)
@@ -29,6 +36,7 @@ def chat_window_widget(root, name):
     tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
               command=lambda: send(e, txt)).place(x=610, y=530)
 
+<<<<<<< HEAD
     # User rating
     help_give_rating = 0
     help_got_rating = 0
@@ -38,20 +46,38 @@ def chat_window_widget(root, name):
              pady=2,
              width=10, height=27, anchor='n').place(x=0, y=0)
 
+=======
+>>>>>>> 97de66b3a7ec1ea621fe8bb4addb3dc57730d590
 
 def change_to_main_window():
     name = name_var.get()
     name_var.set("")
-
-    # Removing all widgets from window
+    chat_screen.pack(fill='both', expand=1)
     login_btn.destroy()
     name_entry.destroy()
     welcome_text.destroy()
     window.destroy()
-
-    # Creating chat window
     chat_window = tk.Tk()
     chat_window_widget(chat_window, name)
+
+
+# ______________________________________________________________________#
+
+def create_chat_screen():
+    tk.Label(chat_screen, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text="Welcome", font=consts.FONT_BOLD, pady=10, width=20, height=1).grid(
+        row=0)
+
+    txt = tk.Text(chat_screen, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=60)
+    txt.grid(row=1, column=0, columnspan=2)
+
+    scrollbar = tk.Scrollbar(txt)
+    scrollbar.place(relheight=1, relx=0.974)
+
+    e = tk.Entry(chat_screen, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=55)
+    e.grid(row=2, column=0)
+    
+    tk.Button(chat_screen, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+              command=send).grid(row=2, column=1).grid(row=2, column=1)
 
 
 def send(e, txt):
@@ -61,6 +87,8 @@ def send(e, txt):
     e.delete(0, tk.END)
 
 
+# ______________________________________________________________________#
+chat_screen = tk.Frame(window)
 name_var = tk.StringVar()
 
 # Widgets in the screen
@@ -76,5 +104,6 @@ login_btn.pack(pady=20)
 name_entry.place(relx=0.5, rely=0.5, anchor="center")
 welcome_text.place(relx=0.5, rely=0.4, anchor="center")
 login_btn.place(relx=0.5, rely=0.57, anchor="center")
+chat_screen.pack()
 
 window.mainloop()
