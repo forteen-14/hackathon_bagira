@@ -40,8 +40,9 @@ class ClientThread(threading.Thread):
     def sent_handle(self,data):
         username,category,description=data
         msg={username:description}
-        self.msgs[category].appand(msg)
+        self.msgs[category].append(msg)
         self.keep_last_msg[category]=[username,description]
+
 
 
     def make_last_msgs_packet(self):
@@ -49,7 +50,7 @@ class ClientThread(threading.Thread):
         for category,chat in self.keep_last_msg.items():
             name,msg=chat
             str+=f"{category}:[{name}:{msg}]#"
-        print(str)
+        print("in fuction:",str)
         return str
 
     def login_handle(self,name):
@@ -58,9 +59,10 @@ class ClientThread(threading.Thread):
         if not dataBase.user_exists(name):  # user not exist
             dataBase.add_user(name)
         _,help_got,help_given=dataBase.get_all_data_by_name(name)
-        print(name,help_got,help_given)
+
         res+=f"{consts.LOGIN}#{name}#{help_got}#{help_given}#"
         res+=self.uplode_at_login_handle()
+
         return res[:-1]
     def uplode_at_login_handle(self):
         res=("")
@@ -69,6 +71,7 @@ class ClientThread(threading.Thread):
             for msg in chat:
                 res+=f"{msg[0]}:{msg[1]}:"
             res+="]"
+            res+="#"
 
         return res
     def handle_client(self,data):
@@ -80,13 +83,17 @@ class ClientThread(threading.Thread):
         print(f"from client: {msg}")
         msg_split=msg.split("#")
         code=msg_split[0]
-        print(msg_split,code)
-        if code==consts.SEND:
-
+        print(code)
+        if code==str(consts.SEND):
+            print("zzz")
+            return False,res
             res=self.sent_handle(msg_split[1:])
         elif code==str(consts.LOGIN):
-            print("login",msg)
             res=self.login_handle(msg_split[-1])
+        elif code==str(consts.LAST_MSGS):
+            print("xxxxxxxxxxxxxxxxxxxx")
+            res=self.make_last_msgs_packet()
+        print("res:",res)
 
         return True,res
 
@@ -98,6 +105,9 @@ class ClientThread(threading.Thread):
 dataBase=db.DataBase()
 msgs = {}
 keep_last_msg = {}
+for i in consts.CATEGORIES:
+    msgs[i]=[]
+    keep_last_msg[i]=[]
 LOCALHOST = consts.IP
 PORT = consts.PORT
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
