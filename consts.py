@@ -17,6 +17,15 @@ PORT = 8467
 
 #categories:
 
+CAR_HELP = "Car\nRescue"
+RESCUE_FROM_ELEVATOR = "Rescue\nFrom\nElevator"
+RESCUE_FROM_HARSH_CONDITIONS = "Rescue\nFrom\nHarsh\nConditions"
+DANGER = "Danger"
+GENERAL = "General"
+
+
+#make a list of all categories
+CATEGORIES=[RESCUE_FROM_HARSH_CONDITIONS,RESCUE_FROM_ELEVATOR,DANGER,GENERAL]
 RESCUE = "rescue"
 RESCUE_FROM_CAR = "rescue_from_car"
 CHANGE_TIRE = "change_tire"
