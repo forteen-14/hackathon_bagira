@@ -56,7 +56,7 @@ class ClientThread(threading.Thread):
         res=""
         if not dataBase.user_exists(name):  # user not exist
             dataBase.add_user(name)
-        name,help_got,help_given=db.getUser(name)
+        name,help_got,help_given=dataBase.get_all_data_by_name(name)
         res+=f"{consts.LOGIN}#{name}#{help_got}#{help_given}#"
         res+=self.uplode_at_login_handle()
         print(res)
@@ -88,21 +88,21 @@ class ClientThread(threading.Thread):
 
 
 
-class server:
-    def __init__(self):
-        self.msgs = {}
-        self.keep_last_msg = {}
-        self.LOCALHOST = consts.IP
-        self.PORT = consts.PORT
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.server.bind((self.LOCALHOST, self.PORT))
-        print("Server started")
-        print("Waiting for client request..")
-        while True:
-            server.listen(1)
-            clientsock, clientAddress = server.accept()
-            newthread = ClientThread(clientAddress, clientsock, self.msgs,self.keep_last_msg)
-            newthread.start()
+
+
+msgs = {}
+keep_last_msg = {}
+LOCALHOST = consts.IP
+PORT = consts.PORT
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server.bind((LOCALHOST, PORT))
+print("Server started")
+print("Waiting for client request..")
+while True:
+    server.listen(1)
+    clientsock, clientAddress = server.accept()
+    newthread = ClientThread(clientAddress, clientsock, msgs,keep_last_msg)
+    newthread.start()
 
 
