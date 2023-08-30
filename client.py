@@ -14,7 +14,7 @@ def start_connection():
 
 
 def send_msg_to_everyone(catagory, msg, client):
-    msg_to_send = f"{consts.SEND}#{user.name}#{consts.RESCUE_FROM_CAR}#{'im stuck in my car'}"
+    msg_to_send = f"{consts.SEND}#{user.name}#{catagory}#{msg}"
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
 
 
@@ -41,8 +41,9 @@ def upload_msg_at_login(client):
 
 
 def keep_connection(client):
+
     login(client)
-    print(user)
+    send_msg_to_everyone(consts.DANGER, "im stuck", client)
     client.close()
 
 
