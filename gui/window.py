@@ -2,9 +2,8 @@ import tkinter as tk
 from tkinter import font
 import consts
 
-
 window = tk.Tk()
-window.title("Chat Hackton")
+window.title("Chat Hackathon")
 window.geometry("1000x750")
 window.resizable(False, False)
 window.config(bg='#4fe3a5')
@@ -12,36 +11,43 @@ window.config(bg='#4fe3a5')
 font1 = font.Font(family='Georgia', size=22, weight='bold')  # Font
 
 
-def chat_window_widget(root, name):
-
+def chat_window_widget(root, name="No name", subject="None"):
     root.title("Chat Hackathon")
+    root.geometry("1000x630")
     root.resizable(False, False)
-    # img = tk.PhotoImage(file=r'../../../PycharmProjects/gui/images/send_btn.png')
-    # img = img.subsample(2, 2)
-    # tk.Frame(root, bg='cyan', width=10, height=120, pady=3).place(x=0, y=0)
-    # img = tk.PhotoImage(file='../../../PycharmProjects/gui/images/send_btn.png')
-    tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=name, font=consts.FONT_BOLD, pady=10, width=20, height=1).grid(
-        row=0)
 
-    txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=60)
-    txt.grid(row=1, column=0)
+    tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=subject, font=consts.FONT_BOLD, pady=10, width=20,
+             height=1).grid(row=0, column=1)
+
+    txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=75, height=25)
+    txt.grid(row=1, column=2)
 
     scrollbar = tk.Scrollbar(txt)
     scrollbar.place(relheight=1, relx=0.974)
 
-    e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=55)
-    e.grid(row=2, column=0)
+    e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=35)
+    e.grid(row=3, column=2)
     tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
-              command=lambda: send(e, txt)).place(x=610, y=530)
+              command=lambda: send(e, txt, name)).place(x=810, y=595)
 
     # User rating
     help_give_rating = 0
     help_got_rating = 0
 
-    tk.Label(root, bg="#B0E0E6", fg="Green", text=name + "\n\n" + "help give: " + str(help_give_rating)
-                                                  + "\n\n" + "help got: " + str(help_got_rating), font=consts.FONT_BOLD,
-             pady=2,
-             width=10, height=27, anchor='n').place(x=0, y=0)
+    label_text = tk.StringVar()
+    label_text.set(name + "\n\n" + "help give: \n" + str(help_give_rating)
+                   + " stars" "\n\n" + "help got: \n" + str(help_got_rating) + " stars")
+
+    tk.Label(root, bg="#B0E0E6", fg="Green", textvariable=label_text, font=consts.FONT_BOLD, pady=2, width=10,
+             height=31, anchor='n').place(x=0, y=45)
+
+    label_category = tk.StringVar()
+    label_category.set("category")
+
+    tk.Label(root, bg="#B0E0E6", fg="Red", textvariable=label_category, font=consts.FONT_BOLD, pady=2, width=10,
+             height=31, anchor='n').place(x=100, y=45)
+
+    # tk.Button(root, text="Rescue", font=consts.FONT_BOLD, bg=consts.BG_GRAY).place(x=0, y=0)
 
 
 def change_to_main_window():
@@ -56,33 +62,13 @@ def change_to_main_window():
     chat_window_widget(chat_window, name)
 
 
-# ______________________________________________________________________#
-
-def create_chat_screen():
-    tk.Label(chat_screen, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text="Welcome", font=consts.FONT_BOLD, pady=10, width=20, height=1).grid(
-        row=0)
-
-    txt = tk.Text(chat_screen, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=60)
-    txt.grid(row=1, column=0, columnspan=2)
-
-    scrollbar = tk.Scrollbar(txt)
-    scrollbar.place(relheight=1, relx=0.974)
-
-    e = tk.Entry(chat_screen, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=55)
-    e.grid(row=2, column=0)
-    
-    tk.Button(chat_screen, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
-              command=send).grid(row=2, column=1).grid(row=2, column=1)
-
-
-def send(e, txt):
-    submit = "You -> " + e.get()
+def send(e, txt, username):
+    submit = username + ": " + e.get()
     txt.insert(tk.END, "\n" + submit)
 
     e.delete(0, tk.END)
 
 
-# ______________________________________________________________________#
 chat_screen = tk.Frame(window)
 name_var = tk.StringVar()
 
