@@ -128,6 +128,3 @@ def main():
         newthread.start()
 if __name__ == "__main__":
     main()
-
-
-
