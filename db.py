@@ -13,6 +13,11 @@ def add_user(name, db):
     db.commit()
 
 
+def get_help_got_and_given(name, db):
+    cursor = db.execute('''SELECT help_given, help_got FROM user WHERE name=?;''', (name,))
+    return cursor.fetchone()
+
+
 def user_exists(name, db):
     cursor = db.execute('''SELECT * FROM user WHERE name=?;''', (name,))
     return len(cursor.fetchall()) > 0
