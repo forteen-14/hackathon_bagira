@@ -83,14 +83,17 @@ class ClientThread(threading.Thread):
         print(f"from client: {msg}")
         msg_split=msg.split("#")
         code=msg_split[0]
+        print(code)
         if code==str(consts.SEND):
+            print("zzz")
+            return False,res
             res=self.sent_handle(msg_split[1:])
         elif code==str(consts.LOGIN):
             res=self.login_handle(msg_split[-1])
-        elif code==str(consts.SEND):
+        elif code==str(consts.LAST_MSGS):
             print("xxxxxxxxxxxxxxxxxxxx")
             res=self.make_last_msgs_packet()
-        print(code,"res:",res)
+        print("res:",res)
 
         return True,res
 

@@ -36,15 +36,21 @@ def get_user_info(client):
     user.help_got = user_info[3]
     print(sever_msg)
 
-def upload_msg_at_login(client):
-    msg_to_send = f"{consts.UPLOAD_MSG_AT_LOGIN}"
+
+def get_last_msg(client):
+    msg_to_send = f"{consts.LAST_MSGS}"
+    client.sendall(bytes(str(msg_to_send), 'UTF-8'))
+    data = client.recv(1024)
+    sever_msg = data.decode()
+    print("tttt",sever_msg)
+
+
 
 
 def keep_connection(client):
-
     login(client)
     send_msg_to_everyone(consts.DANGER, "im stuck", client)
-
+    get_last_msg(client)
     client.close()
 
 
