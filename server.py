@@ -21,7 +21,7 @@ class ClientThread(threading.Thread):
         self.keep_last_msg=keep_last_msg
         self.username=""
         print ("New connection added: ", clientAddress)
-        self.csocket.send(bytes("hello client!", 'UTF-8'))
+
 
     def run(self):
         print ("Connection from : ", self.clientAddress)
