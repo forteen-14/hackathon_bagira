@@ -13,17 +13,15 @@ font1 = font.Font(family='Georgia', size=22, weight='bold')  # Font
 
 
 def chat_window_widget(root, name):
-<<<<<<< HEAD
+
     root.title("Chat Hackathon")
     root.resizable(False, False)
     # img = tk.PhotoImage(file=r'../../../PycharmProjects/gui/images/send_btn.png')
     # img = img.subsample(2, 2)
     # tk.Frame(root, bg='cyan', width=10, height=120, pady=3).place(x=0, y=0)
-=======
     # img = tk.PhotoImage(file='../../../PycharmProjects/gui/images/send_btn.png')
     tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=name, font=consts.FONT_BOLD, pady=10, width=20, height=1).grid(
         row=0)
->>>>>>> 97de66b3a7ec1ea621fe8bb4addb3dc57730d590
 
     txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=60)
     txt.grid(row=1, column=0)
@@ -36,7 +34,6 @@ def chat_window_widget(root, name):
     tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
               command=lambda: send(e, txt)).place(x=610, y=530)
 
-<<<<<<< HEAD
     # User rating
     help_give_rating = 0
     help_got_rating = 0
@@ -46,8 +43,6 @@ def chat_window_widget(root, name):
              pady=2,
              width=10, height=27, anchor='n').place(x=0, y=0)
 
-=======
->>>>>>> 97de66b3a7ec1ea621fe8bb4addb3dc57730d590
 
 def change_to_main_window():
     name = name_var.get()
