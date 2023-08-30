@@ -1,7 +1,7 @@
 import server
 
 def main():
-    serv=server()
+    serv=server.server()
 
 
 
