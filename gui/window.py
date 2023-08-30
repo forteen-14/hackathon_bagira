@@ -58,6 +58,7 @@ def keep_connection(client):
         send_msg_to_everyone(consts.DANGER, "im stuck", client)
         is_first = True
 
+
 def subject_chat_window(root, client, name, subject):
     root.title("Chat Hackathon")
     root.geometry("1000x630")
@@ -94,9 +95,8 @@ def chat_window_widget(root, client, name="No name"):
 
     e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=35)
     e.grid(row=3, column=2)
-    img = tk.PhotoImage(file='not_not.jpg')
 
-    tk.Button(root,image=img ,text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+    tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
               command=lambda: send(e, txt, name, client)).place(x=810, y=595)
 
     # User rating
