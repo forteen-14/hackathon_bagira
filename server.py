@@ -2,6 +2,7 @@ import consts
 import socket, threading
 import db
 
+dataBase=db.DataBase()
 
 #msg={
 # "category1':[[user1:msg1],[user2:msg2]]
@@ -13,12 +14,13 @@ import db
 # "category2':[user2:msg2]
 # }
 class ClientThread(threading.Thread):
-    def __init__(self,clientAddress,clientsocket,msgs,keep_last_msg):
+    def __init__(self,clientAddress,clientsocket,msgs,keep_last_msg,chat_logs):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         self.clientAddress=clientAddress
         self.msgs=msgs
         self.keep_last_msg=keep_last_msg
+        self.chat_logs=chat_logs
         self.username=""
         print ("New connection added: ", clientAddress)
 
@@ -41,6 +43,7 @@ class ClientThread(threading.Thread):
         username,category,description=data
         msg={username:description}
         self.msgs[category].append(msg)
+        self.chat_logs[consts.CATEGORIES.index(category)]
         self.keep_last_msg[category]=[username,description]
 
 
@@ -103,25 +106,28 @@ class ClientThread(threading.Thread):
 
 
 
+def main():
 
-dataBase=db.DataBase()
-msgs = {}
-keep_last_msg = {}
-chat_logs=[open(f"{i}.txt", "a") for i in consts.CATEGORIES]
-for i in consts.CATEGORIES:
-    msgs[i]=[]
-    keep_last_msg[i]=[]
-LOCALHOST = consts.IP
-PORT = consts.PORT
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-server.bind((LOCALHOST, PORT))
-print("Server started")
-print("Waiting for client request..")
-while True:
-    server.listen(1)
-    clientsock, clientAddress = server.accept()
-    newthread = ClientThread(clientAddress, clientsock, msgs,keep_last_msg)
-    newthread.start()
+    msgs = {}
+    keep_last_msg = {}
+    chat_logs=[open(f"logs/{i}.txt", "a") for i in consts.CATEGORIES]
+    for i in consts.CATEGORIES:
+        msgs[i]=[]
+        keep_last_msg[i]=[]
+    LOCALHOST = consts.IP
+    PORT = consts.PORT
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server.bind((LOCALHOST, PORT))
+    print("Server started")
+    print("Waiting for client request..")
+    while True:
+        server.listen(1)
+        clientsock, clientAddress = server.accept()
+        newthread = ClientThread(clientAddress, clientsock, msgs,chat_logs)
+        newthread.start()
+if __name__ == "__main__":
+    main()
+
 
 
