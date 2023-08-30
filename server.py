@@ -2,7 +2,7 @@ import consts
 import socket, threading
 import db
 
-dataBase=db.DataBase()
+
 #msg={
 # "category1':[[user1:msg1],[user2:msg2]]
 # "category2':[[user3:msg31],[user4:msg4]]
@@ -79,9 +79,13 @@ class ClientThread(threading.Thread):
             return False,res
         print(f"from client: {msg}")
         msg_split=msg.split("#")
-        if msg_split==consts.SEND:
+        code=msg_split[0]
+        print(msg_split,code)
+        if code==consts.SEND:
+
             res=self.sent_handle(msg[-1])
-        elif msg_split==consts.LOGIN:
+        elif code==str(consts.LOGIN):
+            print("login")
             res=self.login_handle(msg[1:])
 
         return True,res
@@ -91,7 +95,7 @@ class ClientThread(threading.Thread):
 
 
 
-
+dataBase=db.DataBase()
 msgs = {}
 keep_last_msg = {}
 LOCALHOST = consts.IP
