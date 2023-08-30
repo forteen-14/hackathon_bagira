@@ -56,7 +56,7 @@ def create_chat_screen():
 
     e = tk.Entry(chat_screen, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=55)
     e.grid(row=2, column=0)
-
+    
     tk.Button(chat_screen, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
               command=send).grid(row=2, column=1).grid(row=2, column=1)
 
