@@ -74,12 +74,12 @@ def subject_chat_window(root, client, name, subject):
               command=lambda: send(e, txt, name, client)).place(x=810, y=595)
 
 
-
 def chat_window_widget(root, client, name="No name"):
     root.title("Chat Hackathon")
     root.geometry("1000x630")
     root.resizable(False, False)
-    tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=consts.GENERAL, font=consts.FONT_BOLD, pady=10, width=20,
+    tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=consts.GENERAL, font=consts.FONT_BOLD, pady=10,
+             width=20,
              height=1).grid(row=0, column=1)
 
     txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=75, height=25)
@@ -90,7 +90,9 @@ def chat_window_widget(root, client, name="No name"):
 
     e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=35)
     e.grid(row=3, column=2)
-    tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+    img = tk.PhotoImage(file='not_not.jpg')
+
+    tk.Button(root,image=img ,text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
               command=lambda: send(e, txt, name, client)).place(x=810, y=595)
 
     # User rating
@@ -111,11 +113,17 @@ def chat_window_widget(root, client, name="No name"):
              height=31, anchor='n').place(x=100, y=45)
 
     tk.Button(root, text=consts.CAR_HELP, font=consts.FONT_BOLD, bg=consts.BG_GRAY,
-              command=lambda: subject_chat_window(root, client, name, consts.CAR_HELP), width=8, height=5).place(x=110, y=80)
-    tk.Button(root, text=consts.RESCUE_FROM_ELEVATOR, font=consts.FONT_BOLD, bg=consts.BG_GRAY, command=lambda :subject_chat_window(root, client, name, consts.RESCUE_FROM_ELEVATOR), width=8, height=5).place(x=110, y=180)
-    tk.Button(root, text=consts.RESCUE_FROM_HARSH_CONDITIONS, font=consts.FONT_BOLD, bg=consts.BG_GRAY, command=lambda :subject_chat_window(root, client, name, consts.RESCUE_FROM_HARSH_CONDITIONS), width=8, height=5).place(x=110, y=280)
-    tk.Button(root, text=consts.DANGER, font=consts.FONT_BOLD, bg=consts.BG_GRAY, command=lambda :subject_chat_window(root, client, name, consts.DANGER), width=8, height=5).place(x=110, y=380)
-
+              command=lambda: subject_chat_window(root, client, name, consts.CAR_HELP), width=8, height=5).place(x=110,
+                                                                                                                 y=80)
+    tk.Button(root, text=consts.RESCUE_FROM_ELEVATOR, font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+              command=lambda: subject_chat_window(root, client, name, consts.RESCUE_FROM_ELEVATOR), width=8,
+              height=5).place(x=110, y=180)
+    tk.Button(root, text=consts.RESCUE_FROM_HARSH_CONDITIONS, font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+              command=lambda: subject_chat_window(root, client, name, consts.RESCUE_FROM_HARSH_CONDITIONS), width=8,
+              height=5).place(x=110, y=280)
+    tk.Button(root, text=consts.DANGER, font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+              command=lambda: subject_chat_window(root, client, name, consts.DANGER), width=8, height=5).place(x=110,
+                                                                                                               y=380)
 
 
 def change_to_main_window(client):
