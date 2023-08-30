@@ -47,7 +47,7 @@ class ClientThread(threading.Thread):
         msg=[username,description]
         print(msg)
         self.msgs[category].append(msg)
-        self.chat_logs[consts.CATEGORIES.index(category)]
+        #self.chat_logs[consts.CATEGORIES.index(category)]
         self.keep_last_msg[category]=[username,description]
 
 
