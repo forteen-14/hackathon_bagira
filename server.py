@@ -107,6 +107,7 @@ class ClientThread(threading.Thread):
 dataBase=db.DataBase()
 msgs = {}
 keep_last_msg = {}
+chat_logs=[open(f"{i}.txt", "a") for i in consts.CATEGORIES]
 for i in consts.CATEGORIES:
     msgs[i]=[]
     keep_last_msg[i]=[]
