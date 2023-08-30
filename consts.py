@@ -17,13 +17,13 @@ PORT = 8467
 
 #categories:
 
-RESCUE = 1
-RESCUE_FROM_CAR = 2
-CHANGE_TIRE = 3
-RESCUE_FROM_HARSH_CONDITIONS = 4
-RESCUE_FROM_ELEVATOR = 5
-CHANGE_OIL_AND_WATER = 6
-TRANSPORTATION = 7
-DELIVERY = 8
-DANGER = 9
-GENERAL = 10
+RESCUE = "rescue"
+RESCUE_FROM_CAR = "rescue_from_car"
+CHANGE_TIRE = "change_tire"
+RESCUE_FROM_HARSH_CONDITIONS = "rescue_from_harsh_conditions"
+RESCUE_FROM_ELEVATOR = "rescue_from_elevator"
+CHANGE_OIL_AND_WATER = "change_oil_and_water"
+TRANSPORTATION = "transportation"
+DELIVERY = "delivery"
+DANGER = "danger"
+GENERAL = "general"
