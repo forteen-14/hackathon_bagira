@@ -124,7 +124,7 @@ def main():
     while True:
         server.listen(1)
         clientsock, clientAddress = server.accept()
-        newthread = ClientThread(clientAddress, clientsock, msgs,chat_logs)
+        newthread = ClientThread(clientAddress, clientsock, msgs,keep_last_msg,chat_logs)
         newthread.start()
 if __name__ == "__main__":
     main()
