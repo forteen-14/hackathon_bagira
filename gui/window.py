@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import font
 import consts
+import socket
+import consts
+import user
+import time
 
 window = tk.Tk()
 window.title("Chat Hackathon")
@@ -9,9 +13,48 @@ window.resizable(False, False)
 window.config(bg='#4fe3a5')
 
 font1 = font.Font(family='Georgia', size=22, weight='bold')  # Font
+user = user.User("name", 0, 0)
 
 
-def chat_window_widget(root, name="No name", subject="None"):
+def start_connection():
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect((consts.IP, consts.PORT))
+    return client
+
+
+def send_msg_to_everyone(catagory, msg, client):
+    msg_to_send = f"{consts.SEND}#{user.name}#{catagory}#{msg}"
+    client.sendall(bytes(str(msg_to_send), 'UTF-8'))
+
+
+def login(client):
+    # we would get that from gui
+    user_name = "idk"
+    msg_to_send = f"{consts.LOGIN}#{user_name}"
+    client.sendall(bytes(str(msg_to_send), 'UTF-8'))
+    time.sleep(0.1)
+    get_user_info(client)
+
+
+def get_user_info(client):
+    data = client.recv(1024)
+    sever_msg = data.decode()
+    user_info = sever_msg.split("#")
+    user.name = user_info[1]
+    user.help_given = user_info[2]
+    user.help_got = user_info[3]
+
+
+def upload_msg_at_login(client):
+    msg_to_send = f"{consts.UPLOAD_MSG_AT_LOGIN}"
+
+
+def keep_connection(client):
+    login(client)
+    send_msg_to_everyone(consts.DANGER, "im stuck", client)
+
+
+def chat_window_widget(root, client, name="No name", subject="None"):
     root.title("Chat Hackathon")
     root.geometry("1000x630")
     root.resizable(False, False)
@@ -28,7 +71,7 @@ def chat_window_widget(root, name="No name", subject="None"):
     e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=35)
     e.grid(row=3, column=2)
     tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
-              command=lambda: send(e, txt, name)).place(x=810, y=595)
+              command=lambda: send(e, txt, name, client)).place(x=810, y=595)
 
     # User rating
     help_give_rating = 0
@@ -50,7 +93,7 @@ def chat_window_widget(root, name="No name", subject="None"):
     # tk.Button(root, text="Rescue", font=consts.FONT_BOLD, bg=consts.BG_GRAY).place(x=0, y=0)
 
 
-def change_to_main_window():
+def change_to_main_window(client):
     name = name_var.get()
     name_var.set("")
     chat_screen.pack(fill='both', expand=1)
@@ -59,13 +102,15 @@ def change_to_main_window():
     welcome_text.destroy()
     window.destroy()
     chat_window = tk.Tk()
-    chat_window_widget(chat_window, name)
+    login(client)
+    subject = ""
+    chat_window_widget(chat_window, client, name, subject)
 
 
-def send(e, txt, username):
-    submit = username + ": " + e.get()
-    txt.insert(tk.END, "\n" + submit)
-
+def send(e, txt, username, client):
+    msg = e.get()
+    txt.insert(tk.END, "\n" + username + ": " + msg)
+    send_msg_to_everyone(consts.RESCUE, msg, client)
     e.delete(0, tk.END)
 
 
@@ -75,7 +120,8 @@ name_var = tk.StringVar()
 # Widgets in the screen
 welcome_text = tk.Label(window, text="Welcome! Sign in", foreground="blue", font=font1, justify="center")
 
-login_btn = tk.Button(window, text="Sign in", font=font1, command=change_to_main_window, justify="center")
+login_btn = tk.Button(window, text="Sign in", font=font1, command=lambda: change_to_main_window(client),
+                      justify="center")
 
 name_entry = tk.Entry(window, textvariable=name_var, font=('calibre', 10, 'normal'), )
 
@@ -86,5 +132,15 @@ name_entry.place(relx=0.5, rely=0.5, anchor="center")
 welcome_text.place(relx=0.5, rely=0.4, anchor="center")
 login_btn.place(relx=0.5, rely=0.57, anchor="center")
 chat_screen.pack()
+
+
+try:
+    client = start_connection()
+    keep_connection(client)
+except:
+    print("ERROR: Connection failed")
+
+
+
 
 window.mainloop()
