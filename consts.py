@@ -17,9 +17,9 @@ PORT = 34467
 
 #categories:
 
-CAR_HELP = "Car\nRescue"
-RESCUE_FROM_ELEVATOR = "Rescue\nFrom\nElevator"
-RESCUE_FROM_HARSH_CONDITIONS = "Rescue\nFrom\nHarsh\nConditions"
+CAR_HELP = "CarRescue"
+RESCUE_FROM_ELEVATOR = "RescueFromElevator"
+RESCUE_FROM_HARSH_CONDITIONS = "RescueFromHarshConditions"
 DANGER = "Danger"
 GENERAL = "General"
 CATEGORIES=[RESCUE_FROM_HARSH_CONDITIONS,RESCUE_FROM_ELEVATOR,DANGER,GENERAL]
