@@ -12,7 +12,7 @@ GET_USER_INFO=203
 LAST_MSGS=204
 
 IP = "127.0.0.1"
-PORT = 8034
+PORT = 8467
 
 
 #categories:
