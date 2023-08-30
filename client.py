@@ -13,6 +13,7 @@ def start_connection():
 def handle_client_by_code(server_code, data):
     if server_code == consts.SEND:
         # CODE#username#category#subject#descreption
+        msg_to_send = {"CODE":200, }
         pass
     elif server_code == consts.LOGIN:
         # CODE#username
@@ -36,7 +37,7 @@ def keep_connection(client):
         in_data = client.recv(1024)
         sever_msg = in_data.decode()
         server_code = sever_msg[0:2]
-        handle_client_by_code(server_code, sever_msg[2:])
+        user = handle_client_by_code(server_code, sever_msg[2:])
         print("From Server :", sever_msg)
         out_data = input()
         client.sendall(bytes(out_data, 'UTF-8'))
