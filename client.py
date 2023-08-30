@@ -21,7 +21,7 @@ def send_msg_to_everyone(catagory, msg, client):
 def login(client):
     # we would get that from gui
     user_name = "idk"
-    msg_to_send = {"CODE": consts.LOGIN, "USERNAME": user_name}
+    msg_to_send =f"{consts.LOGIN}#{user_name}"
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
     time.sleep(0.1)
     get_user_info(client)
