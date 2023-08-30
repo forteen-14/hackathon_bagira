@@ -1,6 +1,6 @@
+import os
 import tkinter as tk
 from tkinter import font
-import consts
 import socket
 import consts
 import user
@@ -54,12 +54,32 @@ def keep_connection(client):
     send_msg_to_everyone(consts.DANGER, "im stuck", client)
 
 
-def chat_window_widget(root, client, name="No name", subject="None"):
+def subject_chat_window(root, client, name, subject):
     root.title("Chat Hackathon")
     root.geometry("1000x630")
     root.resizable(False, False)
 
     tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=subject, font=consts.FONT_BOLD, pady=10, width=20,
+             height=1).grid(row=0, column=1)
+
+    txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=75, height=25)
+    txt.grid(row=1, column=2)
+
+    scrollbar = tk.Scrollbar(txt)
+    scrollbar.place(relheight=1, relx=0.974)
+
+    e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=35)
+    e.grid(row=3, column=2)
+    tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+              command=lambda: send(e, txt, name, client)).place(x=810, y=595)
+
+
+
+def chat_window_widget(root, client, name="No name"):
+    root.title("Chat Hackathon")
+    root.geometry("1000x630")
+    root.resizable(False, False)
+    tk.Label(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, text=consts.GENERAL, font=consts.FONT_BOLD, pady=10, width=20,
              height=1).grid(row=0, column=1)
 
     txt = tk.Text(root, bg=consts.BG_COLOR, fg=consts.TEXT_COLOR, font=consts.FONT, width=75, height=25)
@@ -90,7 +110,12 @@ def chat_window_widget(root, client, name="No name", subject="None"):
     tk.Label(root, bg="#B0E0E6", fg="Red", textvariable=label_category, font=consts.FONT_BOLD, pady=2, width=10,
              height=31, anchor='n').place(x=100, y=45)
 
-    # tk.Button(root, text="Rescue", font=consts.FONT_BOLD, bg=consts.BG_GRAY).place(x=0, y=0)
+    tk.Button(root, text=consts.CAR_HELP, font=consts.FONT_BOLD, bg=consts.BG_GRAY,
+              command=lambda: subject_chat_window(root, client, name, consts.CAR_HELP), width=8, height=5).place(x=110, y=80)
+    tk.Button(root, text=consts.RESCUE_FROM_ELEVATOR, font=consts.FONT_BOLD, bg=consts.BG_GRAY, command=lambda :subject_chat_window(root, client, name, consts.RESCUE_FROM_ELEVATOR), width=8, height=5).place(x=110, y=180)
+    tk.Button(root, text=consts.RESCUE_FROM_HARSH_CONDITIONS, font=consts.FONT_BOLD, bg=consts.BG_GRAY, command=lambda :subject_chat_window(root, client, name, consts.RESCUE_FROM_HARSH_CONDITIONS), width=8, height=5).place(x=110, y=280)
+    tk.Button(root, text=consts.DANGER, font=consts.FONT_BOLD, bg=consts.BG_GRAY, command=lambda :subject_chat_window(root, client, name, consts.DANGER), width=8, height=5).place(x=110, y=380)
+
 
 
 def change_to_main_window(client):
@@ -103,14 +128,13 @@ def change_to_main_window(client):
     window.destroy()
     chat_window = tk.Tk()
     login(client)
-    subject = ""
-    chat_window_widget(chat_window, client, name, subject)
+    chat_window_widget(chat_window, client, name)
 
 
 def send(e, txt, username, client):
     msg = e.get()
     txt.insert(tk.END, "\n" + username + ": " + msg)
-    send_msg_to_everyone(consts.RESCUE, msg, client)
+    send_msg_to_everyone("", msg, client)
     e.delete(0, tk.END)
 
 
@@ -133,14 +157,10 @@ welcome_text.place(relx=0.5, rely=0.4, anchor="center")
 login_btn.place(relx=0.5, rely=0.57, anchor="center")
 chat_screen.pack()
 
-
 try:
     client = start_connection()
     keep_connection(client)
 except:
     print("ERROR: Connection failed")
-
-
-
 
 window.mainloop()

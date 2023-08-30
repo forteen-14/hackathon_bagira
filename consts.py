@@ -17,15 +17,12 @@ PORT = 8467
 
 #categories:
 
-RESCUE = "rescue"
-RESCUE_FROM_CAR = "rescue_from_car"
-CHANGE_TIRE = "change_tire"
-RESCUE_FROM_HARSH_CONDITIONS = "rescue_from_harsh_conditions"
-RESCUE_FROM_ELEVATOR = "rescue_from_elevator"
-CHANGE_OIL_AND_WATER = "change_oil_and_water"
-TRANSPORTATION = "transportation"
-DELIVERY = "delivery"
-DANGER = "danger"
-GENERAL = "general"
+CAR_HELP = "Car\nRescue"
+RESCUE_FROM_ELEVATOR = "Rescue\nFrom\nElevator"
+RESCUE_FROM_HARSH_CONDITIONS = "Rescue\nFrom\nHarsh\nConditions"
+DANGER = "Danger"
+GENERAL = "General"
+
+
 #make a list of all categories
-CATEGORIES=[RESCUE,RESCUE_FROM_CAR,CHANGE_TIRE,RESCUE_FROM_HARSH_CONDITIONS,RESCUE_FROM_ELEVATOR,CHANGE_OIL_AND_WATER,TRANSPORTATION,DELIVERY,DANGER,GENERAL]
+CATEGORIES=[RESCUE_FROM_HARSH_CONDITIONS,RESCUE_FROM_ELEVATOR,DANGER,GENERAL]
