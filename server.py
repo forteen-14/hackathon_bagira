@@ -48,9 +48,11 @@ class ClientThread(threading.Thread):
     def make_last_msgs_packet(self):
         str=f"{consts.LAST_MSGS}#"
         for category,chat in self.keep_last_msg.items():
-            name,msg=chat
+            name=[]
+            msg=[]
+            if len(chat)==2:
+                name,msg=chat
             str+=f"{category}:[{name}:{msg}]#"
-        print("in fuction:",str)
         return str
 
     def login_handle(self,name):
@@ -85,13 +87,13 @@ class ClientThread(threading.Thread):
         code=msg_split[0]
         print(code)
         if code==str(consts.SEND):
-            print("zzz")
-            return False,res
-            res=self.sent_handle(msg_split[1:])
+
+
+            self.sent_handle(msg_split[1:])
         elif code==str(consts.LOGIN):
             res=self.login_handle(msg_split[-1])
         elif code==str(consts.LAST_MSGS):
-            print("xxxxxxxxxxxxxxxxxxxx")
+
             res=self.make_last_msgs_packet()
         print("res:",res)
 

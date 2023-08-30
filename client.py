@@ -38,11 +38,13 @@ def get_user_info(client):
 
 
 def get_last_msg(client):
+
     msg_to_send = f"{consts.LAST_MSGS}"
+
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
     data = client.recv(1024)
     sever_msg = data.decode()
-    print("tttt",sever_msg)
+    print(sever_msg)
 
 
 
