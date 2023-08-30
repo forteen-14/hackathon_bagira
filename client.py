@@ -40,19 +40,14 @@ def upload_msg_at_login(client):
     msg_to_send = {"CODE": consts.UPLOAD_MSG_AT_LOGIN}
 
 
-
-
-
 def keep_connection(client):
     while True:
         in_data = client.recv(1024)
         sever_msg = in_data.decode()
         server_code = sever_msg[0:2]
         print("From Server :", sever_msg)
-        out_data = input()
-        client.sendall(bytes(out_data, 'UTF-8'))
-        if out_data == 'bye':
-            break
+        login(client)
+        print(user)
     client.close()
 
 
