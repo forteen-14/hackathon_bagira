@@ -13,6 +13,7 @@ dataBase=db.DataBase()
 # "category1':[user1,msg1]
 # "category2':[user2:msg2]
 # }
+
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket,msgs,keep_last_msg,chat_logs):
         threading.Thread.__init__(self)
@@ -40,8 +41,11 @@ class ClientThread(threading.Thread):
 
 
     def sent_handle(self,data):
+        print(data)
         username,category,description=data
+        print("x", self.msgs,category)
         msg={username:description}
+        print(msg)
         self.msgs[category].append(msg)
         self.chat_logs[consts.CATEGORIES.index(category)]
         self.keep_last_msg[category]=[username,description]
@@ -74,7 +78,6 @@ class ClientThread(threading.Thread):
         for catgory,chat in self.msgs.items():
             res += f"{catgory}:["
             for msg in chat:
-                print("ttt ",msg,f"{msg[0]}:{msg[1]}:")
                 res+=f"{msg[0]}:{msg[1]}:"
             res+="]"
             res+="#"
