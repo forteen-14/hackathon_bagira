@@ -13,8 +13,6 @@ def add_user(name, db):
     db.commit()
 
 
-
-#check if user exists
 def user_exists(name, db):
     cursor = db.execute('''SELECT * FROM user WHERE name=?;''', (name,))
     return len(cursor.fetchall()) > 0
