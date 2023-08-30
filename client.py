@@ -37,7 +37,7 @@ def get_user_info(client):
 
 
 def get_last_msg(client):
-    msg_to_send = f"{consts.SEND}"
+     msg_to_send = f"{consts.SEND}"
     data = client.recv(1024)
     sever_msg = data.decode()
 
