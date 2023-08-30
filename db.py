@@ -19,6 +19,11 @@ class DataBase:
         cursor = self.db.execute('''SELECT * FROM user WHERE name=?;''', (name,))
         return len(cursor.fetchall()) > 0
 
+
+    def get_all_data_by_name(self,name):
+        cursor = self.db.execute('''SELECT * FROM user WHERE name=?;''', (name,))
+        return cursor.fetchall()[0]
+
     def close(self):
         self.db.close()
 
