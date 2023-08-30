@@ -14,14 +14,14 @@ def start_connection():
 
 
 def send_msg_to_everyone(catagory, msg, client):
-    msg_to_send = {"CODE": consts.SEND, "USERNAME": user.name, "CATEGORY": consts.RESCUE_FROM_CAR, "MSG": "im stuck in my car"}
+    msg_to_send = f"{consts.SEND}#{user.name}#{consts.RESCUE_FROM_CAR}#{'im stuck in my car'}"
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
 
 
 def login(client):
     # we would get that from gui
     user_name = "idk"
-    msg_to_send =f"{consts.LOGIN}#{user_name}"
+    msg_to_send = f"{consts.LOGIN}#{user_name}"
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
     time.sleep(0.1)
     get_user_info(client)
@@ -37,13 +37,12 @@ def get_user_info(client):
 
 
 def upload_msg_at_login(client):
-    msg_to_send = {"CODE": consts.UPLOAD_MSG_AT_LOGIN}
+    msg_to_send = f"{consts.UPLOAD_MSG_AT_LOGIN}"
 
 
 def keep_connection(client):
-    while True:
-        login(client)
-        print(user)
+    login(client)
+    print(user)
     client.close()
 
 
