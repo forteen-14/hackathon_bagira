@@ -6,12 +6,14 @@ import consts
 import user
 import time
 
+is_first = True
 window = tk.Tk()
 window.title("Chat Hackathon")
 window.geometry("1000x750")
 window.resizable(False, False)
 window.config(bg='#4fe3a5')
 
+font1 = font.Font(family='Georgia', size=22, weight='bold')  # Font
 font1 = font.Font(family='Georgia', size=22, weight='bold')  # Font
 user = user.User("name", 0, 0)
 
@@ -50,9 +52,11 @@ def upload_msg_at_login(client):
 
 
 def keep_connection(client):
-    login(client)
-    send_msg_to_everyone(consts.DANGER, "im stuck", client)
-
+    global is_first
+    if not is_first:
+        login(client)
+        send_msg_to_everyone(consts.DANGER, "im stuck", client)
+        is_first = True
 
 def subject_chat_window(root, client, name, subject):
     root.title("Chat Hackathon")
