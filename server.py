@@ -2,7 +2,7 @@ import consts
 import socket, threading
 import db
 
-dataBase=db.DataBase()
+
 #msg={
 # "category1':[[user1:msg1],[user2:msg2]]
 # "category2':[[user3:msg31],[user4:msg4]]
@@ -21,7 +21,7 @@ class ClientThread(threading.Thread):
         self.keep_last_msg=keep_last_msg
         self.username=""
         print ("New connection added: ", clientAddress)
-        self.csocket.send(bytes("hello client!", 'UTF-8'))
+
 
     def run(self):
         print ("Connection from : ", self.clientAddress)
@@ -57,11 +57,11 @@ class ClientThread(threading.Thread):
         res=""
         if not dataBase.user_exists(name):  # user not exist
             dataBase.add_user(name)
-        name,help_got,help_given=dataBase.get_all_data_by_name(name)
+        _,help_got,help_given=dataBase.get_all_data_by_name(name)
+        print(name,help_got,help_given)
         res+=f"{consts.LOGIN}#{name}#{help_got}#{help_given}#"
         res+=self.uplode_at_login_handle()
-        print(res)
-        return res
+        return res[:-1]
     def uplode_at_login_handle(self):
         res=("")
         for catgory,chat in self.msgs.items():
@@ -73,16 +73,20 @@ class ClientThread(threading.Thread):
         return res
     def handle_client(self,data):
         msg = data.decode()
-        print(msg)
+
         res=""
         if msg == 'bye' or len(data) == 0:
             return False,res
         print(f"from client: {msg}")
         msg_split=msg.split("#")
-        if msg_split==consts.SEND:
-            res=self.sent_handle(msg[-1])
-        elif msg_split==consts.LOGIN:
-            res=self.login_handle(msg[1:])
+        code=msg_split[0]
+        print(msg_split,code)
+        if code==consts.SEND:
+
+            res=self.sent_handle(msg_split[1:])
+        elif code==str(consts.LOGIN):
+            print("login",msg)
+            res=self.login_handle(msg_split[-1])
 
         return True,res
 
@@ -91,7 +95,7 @@ class ClientThread(threading.Thread):
 
 
 
-
+dataBase=db.DataBase()
 msgs = {}
 keep_last_msg = {}
 LOCALHOST = consts.IP

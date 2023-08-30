@@ -14,14 +14,14 @@ def start_connection():
 
 
 def send_msg_to_everyone(catagory, msg, client):
-    msg_to_send = {"CODE": consts.SEND, "USERNAME": user.name, "CATEGORY": consts.RESCUE_FROM_CAR, "MSG": "im stuck in my car"}
+    msg_to_send = f"{consts.SEND}#{user.name}#{catagory}#{msg}"
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
 
 
 def login(client):
     # we would get that from gui
     user_name = "idk"
-    msg_to_send = {"CODE": consts.LOGIN, "USERNAME": user_name}
+    msg_to_send = f"{consts.LOGIN}#{user_name}"
     client.sendall(bytes(str(msg_to_send), 'UTF-8'))
     time.sleep(0.1)
     get_user_info(client)
@@ -30,24 +30,20 @@ def login(client):
 def get_user_info(client):
     data = client.recv(1024)
     sever_msg = data.decode()
-    user_info = data.split("#")
-    user.name = user_info[0]
-    user.help_given = user_info[1]
-    user.help_got = user_info[2]
+    user_info = sever_msg.split("#")
+    user.name = user_info[1]
+    user.help_given = user_info[2]
+    user.help_got = user_info[3]
 
 
 def upload_msg_at_login(client):
-    msg_to_send = {"CODE": consts.UPLOAD_MSG_AT_LOGIN}
+    msg_to_send = f"{consts.UPLOAD_MSG_AT_LOGIN}"
 
 
 def keep_connection(client):
-    while True:
-        in_data = client.recv(1024)
-        sever_msg = in_data.decode()
-        server_code = sever_msg[0:2]
-        print("From Server :", sever_msg)
-        login(client)
-        print(user)
+
+    login(client)
+    send_msg_to_everyone(consts.DANGER, "im stuck", client)
     client.close()
 
 
