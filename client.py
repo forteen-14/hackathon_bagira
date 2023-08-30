@@ -49,10 +49,7 @@ def keep_connection(client):
         sever_msg = in_data.decode()
         server_code = sever_msg[0:2]
         print("From Server :", sever_msg)
-        out_data = input()
-        client.sendall(bytes(out_data, 'UTF-8'))
-        if out_data == 'bye':
-            break
+
     client.close()
 
 
