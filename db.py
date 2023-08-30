@@ -4,7 +4,7 @@ class DataBase:
     def __init__(self):
         self.db = self.create_table()
     def create_table(self):
-        db = sqlite3.connect('db.db')
+        db = sqlite3.connect('db.db',check_same_thread=False)
         db.execute('''CREATE TABLE IF NOT EXISTS user (name TEXT, help_given INT, help_got INT);''')
         db.commit()
         return db
