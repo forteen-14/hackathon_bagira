@@ -42,6 +42,7 @@ class ClientThread(threading.Thread):
     def sent_handle(self,data):
         username,category,description=data
         msg={username:description}
+        print(msg)
         self.msgs[category].append(msg)
         self.chat_logs[consts.CATEGORIES.index(category)]
         self.keep_last_msg[category]=[username,description]

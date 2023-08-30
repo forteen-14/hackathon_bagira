@@ -76,7 +76,7 @@ def subject_chat_window(root, client, name, subject):
     e = tk.Entry(root, bg="#2C3E50", fg=consts.TEXT_COLOR, font=consts.FONT, width=35)
     e.grid(row=3, column=2)
     tk.Button(root, text="Send", font=consts.FONT_BOLD, bg=consts.BG_GRAY,
-              command=lambda: send(e, txt, name, client)).place(x=810, y=595)
+              command=lambda: send(e, txt, name, client, subject)).place(x=810, y=595)
 
 
 def chat_window_widget(root, client, name="No name"):
@@ -143,10 +143,10 @@ def change_to_main_window(client):
     chat_window_widget(chat_window, client, name)
 
 
-def send(e, txt, username, client):
+def send(e, txt, username, client, subject):
     msg = e.get()
     txt.insert(tk.END, "\n" + username + ": " + msg)
-    send_msg_to_everyone("", msg, client)
+    send_msg_to_everyone(subject, msg, client)
     e.delete(0, tk.END)
 
 
